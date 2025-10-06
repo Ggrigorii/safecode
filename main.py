@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import requests
 import os
+from pydantic import BaseModel
 
 app = FastAPI(title="SafeCode AI — Security Code Analyzer")
 
