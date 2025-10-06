@@ -1,0 +1,235 @@
+Вставьте ваш код,Язык кода,Результат анализа,flag,username,timestamp
+"import sqlite3
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+API_KEY = ""sk-prod-abc123xyz456""
+
+@app.route('/user')
+def user():
+    name = request.args.get('name', '')
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute(f""SELECT * FROM users WHERE name = '{name}'"")
+    user = cursor.fetchone()
+    return f""<h1>Привет, {name}!</h1>"" if user else ""<h1>Пользователь не найден</h1>""
+
+@app.route('/search')
+def search():
+    query = request.args.get('q', '')
+    return render_template_string(f""<div>Результаты поиска: {query}</div>"")",python,"Уязвимость типа: SQL Injection  
+
+Описание риска: Успешная конкатенация строк может привести к SQL Injection, позволяя злоумышленнику вставлять произвольные SQL-запросы в код, что может даже устранять файловую систему или удалить данные.  
+
+Как исправить: Использовать параметризованные запросы или Prepared Statements, чтобы предотвратить возможность внедрения SQL-кода в запрос к базе данных.  
+
+OWASP/CWE: https://owasp.org/www.owasp.org/index.php/SQL_Injection_Prevention#Implementation (SQL Injection)  
+
+Исправленный код на Python:
+
+```python
+import sqlite3
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+API_KEY = ""sk-prod-abc123xyz456""
+
+@app.route('/user')
+def user():
+    name = request.args.get('name', '')  # Исправленный вызов get
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    # Использование параметризированного запроса
+    query = ""SELECT * FROM users WHERE name = ?""  # Использование ""?"" для параметра
+    user_data = cursor.execute(query, (name,)).fetchone()
+    
+    return f""<h1>Привет, {name}!</h1>"" if user_data else ""<h1>Пользователь не найден</h1>""
+
+@app.route('/search')
+def search():
+    query = request.args.get('q', '')  # Исправленный вызов get
+    return render_template_string(f""<div>Результаты поиска: {query}</div>"")
+    
+if __name__ == ""__main__0"":
+    app.run(debug=True)
+```",,,2025-10-06 19:03:39.719244
+"import sqlite3
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+API_KEY = ""sk-prod-abc123xyz456""
+
+@app.route('/user')
+def user():
+    name = request.args.get('name', '')
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute(f""SELECT * FROM users WHERE name = '{name}'"")
+    user = cursor.fetchone()
+    return f""<h1>Привет, {name}!</h1>"" if user else ""<h1>Пользователь не найден</h1>""
+
+@app.route('/search')
+def search():
+    query = request.args.get('q', '')
+    return render_template_string(f""<div>Результаты поиска: {query}</div>"")",python,"Уязвимость типа: SQL Injection  
+
+Описание риска: Успешная конкатенация строк может привести к SQL Injection, позволяя злоумышленнику вставлять произвольные SQL-запросы в код, что может даже устранять файловую систему или удалить данные.  
+
+Как исправить: Использовать параметризованные запросы или Prepared Statements, чтобы предотвратить возможность внедрения SQL-кода в запрос к базе данных.  
+
+OWASP/CWE: https://owasp.org/www.owasp.org/index.php/SQL_Injection_Prevention#Implementation (SQL Injection)  
+
+Исправленный код на Python:
+
+```python
+import sqlite3
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+API_KEY = ""sk-prod-abc123xyz456""
+
+@app.route('/user')
+def user():
+    name = request.args.get('name', '')  # Исправленный вызов get
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    # Использование параметризированного запроса
+    query = ""SELECT * FROM users WHERE name = ?""  # Использование ""?"" для параметра
+    user_data = cursor.execute(query, (name,)).fetchone()
+    
+    return f""<h1>Привет, {name}!</h1>"" if user_data else ""<h1>Пользователь не найден</h1>""
+
+@app.route('/search')
+def search():
+    query = request.args.get('q', '')  # Исправленный вызов get
+    return render_template_string(f""<div>Результаты поиска: {query}</div>"")
+    
+if __name__ == ""__main__0"":
+    app.run(debug=True)
+```",,,2025-10-06 19:03:41.940242
+"import sqlite3
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+API_KEY = ""sk-prod-abc123xyz456""
+
+@app.route('/user')
+def user():
+    name = request.args.get('name', '')
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute(f""SELECT * FROM users WHERE name = '{name}'"")
+    user = cursor.fetchone()
+    return f""<h1>Привет, {name}!</h1>"" if user else ""<h1>Пользователь не найден</h1>""
+
+@app.route('/search')
+def search():
+    query = request.args.get('q', '')
+    return render_template_string(f""<div>Результаты поиска: {query}</div>"")",python,"Уязвимость типа: SQL Injection  
+
+Описание риска: Успешная конкатенация строк может привести к SQL Injection, позволяя злоумышленнику вставлять произвольные SQL-запросы в код, что может даже устранять файловую систему или удалить данные.  
+
+Как исправить: Использовать параметризованные запросы или Prepared Statements, чтобы предотвратить возможность внедрения SQL-кода в запрос к базе данных.  
+
+OWASP/CWE: https://owasp.org/www.owasp.org/index.php/SQL_Injection_Prevention#Implementation (SQL Injection)  
+
+Исправленный код на Python:
+
+```python
+import sqlite3
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+API_KEY = ""sk-prod-abc123xyz456""
+
+@app.route('/user')
+def user():
+    name = request.args.get('name', '')  # Исправленный вызов get
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    # Использование параметризированного запроса
+    query = ""SELECT * FROM users WHERE name = ?""  # Использование ""?"" для параметра
+    user_data = cursor.execute(query, (name,)).fetchone()
+    
+    return f""<h1>Привет, {name}!</h1>"" if user_data else ""<h1>Пользователь не найден</h1>""
+
+@app.route('/search')
+def search():
+    query = request.args.get('q', '')  # Исправленный вызов get
+    return render_template_string(f""<div>Результаты поиска: {query}</div>"")
+    
+if __name__ == ""__main__0"":
+    app.run(debug=True)
+```",,,2025-10-06 19:03:43.958240
+"import java.io.*;
+import java.nio.file.*;
+
+public class FileServer {
+    public static void main(String[] args) throws Exception {
+        String filename = args[0];
+        Path path = Paths.get(""/var/www/uploads/"" + filename);
+        byte[] content = Files.readAllBytes(path);
+        System.out.println(new String(content));
+    }
+}
+
+class User implements Serializable {
+    private String name;
+    private int age;
+
+    // Не безопасно — можно десериализовать вредоносный объект
+}",python,"Вот пример анализа кода:
+
+Уязвимость: Deserialization of Untrusted Data (CWE-502)
+1. Описание риска: Десериализация данных от недоверенного источника может привести к полному контролю над системой, включая возможность рутины меню скачания архива или вредоносного кода.
+2. Как исправить: Не использовать функции десериализации в коде без проверки источника и проверки данных перед их восстановлением. Вместо этого, используй другие способы получения информации о пользователе, например через параметры GET или POST.
+3. Ссылку на OWASP/CWE: https://owasp.org/www.owasp.org/index.php/Deserialization_Threats#Serialisation-Vulnerabilities
+4. Используй JSON или Protocol Buffers с валидацией, а не Java serialization для хранения информации о пользователях.
+
+Дальше уязвимость: Path Traversal (CWE-22)
+1. Описание риска: Атакующий может читать или записывать файлы за пределами целевой директории с помощью последовательностей вроде `../`.
+2. Как исправить: Не используй небезопасные функции открытия файла и вместо этого проверяй содержимое параметра `filename` на соответствие только ожидающим подпапкам. Пример кода для этого:
+
+```python
+import os
+from flask import Flask, request
+app = Flask(__name__)
+UPLOAD_FOLDER = '/var/www/uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png'}  # допустимые расширения файлов
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/upload')
+def upload_file():
+    uploaded_files = request.files.getlist('file')
+    
+    for file in uploaded_files:
+        if not allowed_file(file.filename):
+            continue  # Пропускаем файлы с недопустимыми расширениями
+        
+        filename = secure_filename(file.filename)
+        destination = os.paths.join(UPLOAD_FOLDER, file.filename).replace(""\\"", ""/"")
+        if not os.path0:
+            continue  # Пропускаем пустые имена файлов
+        
+        try:    
+           with open(destination, 'wb') as f:
+               f.write(file.read())
+        except IOError:
+            pass  # Пропускаем файлы недоступных для записи
+            
+    return ""Файлы загружены""
+```
+
+3. Как исправить: Добавь проверку на корректность папки, кромечтеся от безопасности папки и непредугаREF",,,2025-10-06 19:06:46.903338
